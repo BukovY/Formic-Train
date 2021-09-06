@@ -1,25 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {useSelector} from "react-redux";
 
-const LoginForm = () => {
-    const {valSheme} = useSelector((state)=> state.valSheme)
-    const defVal = Yup.string().max(10, "Need < 10").required("Required")
-    const word5 = Yup.string().max(5, "Need < 5").required("Required")
-    const word2 = Yup.string().max(2, "Need < 2").required("Required")
+export const LoginForm = ({ valSheme, changeValSheme }) => {
+  const memorizedValSheme = useMemo(() => {
+    return valSheme;
+  }, [valSheme]);
 
-    const changeValSheme = (arg) => {
-        if(arg === 'def'){
-            return defVal
-        }
-        if(arg === 'word5'){
-            return word5
-        }
-        if(arg === 'word2'){
-            return word2
-        }
-    }
   const { handleSubmit, handleChange, values, touched, errors, handleBlur } =
     useFormik({
       initialValues: {
@@ -27,7 +14,7 @@ const LoginForm = () => {
         password: "",
       },
       validationSchema: Yup.object({
-        login: changeValSheme(valSheme),
+        login: changeValSheme(memorizedValSheme),
         password: Yup.string().max(5, "Need 5").required(),
       }),
       onSubmit: ({ login, password }) => {
@@ -60,10 +47,10 @@ const LoginForm = () => {
         {touched.password && errors.password ? (
           <div>{errors.password}</div>
         ) : null}
-        <button type="submit" color="primary" variant="contained">Log in</button>
+        <button type="submit" color="primary" variant="contained">
+          Log in
+        </button>
       </form>
     </>
   );
 };
-
-export default LoginForm;
