@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <SelectorValidationSheme setValidationSheme={setValidationSheme} />
-      <LoginForm valSheme={valSheme} changeValSheme={changeValSheme} />
+      <LoginForm valSheme={valSheme} loginValidation={changeValSheme} />
     </>
   );
 }
