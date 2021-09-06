@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const changeValSheme = (arg) => {
+export const getValidationScheme = (arg) => {
   switch (arg) {
     case "word5":
       return Yup.string().max(5, "Need < 5").required("Required");

@@ -1,24 +1,34 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const LoginForm = ({ valSheme, loginValidation, onSubmit }) => {
-  const memorizedValSheme = useMemo(() => {
-    return valSheme;
-  }, [valSheme]);
+export const LoginForm = ({
+  loginValidationSelector,
+  getSchemeValidation,
+  onSubmit,
+}) => {
+  const memorizedValidationScheme = useMemo(() => {
+    return Yup.object({
+      login: getSchemeValidation(loginValidationSelector),
+      password: Yup.string().max(5, "Need < 5").required(),
+    });
+  }, [loginValidationSelector]);
+
+  const memorizedOnSubmit = useCallback((obj) => {
+    onSubmit(obj);
+  }, []);
+
+  const initialValues = {
+    login: "",
+    password: "",
+  };
 
   const { handleSubmit, handleChange, values, touched, errors, handleBlur } =
     useFormik({
-      initialValues: {
-        login: "",
-        password: "",
-      },
-      validationSchema: Yup.object({
-        login: loginValidation(memorizedValSheme),
-        password: Yup.string().max(5, "Need < 5").required(),
-      }),
+      initialValues: initialValues,
+      validationSchema: memorizedValidationScheme,
       onSubmit: ({ login, password }) => {
-        onSubmit({ login: login, password: password });
+        memorizedOnSubmit({ login: login, password: password });
       },
     });
   return (

@@ -1,10 +1,10 @@
 import { combineReducers, createStore } from "redux";
-import valSheme from './reducer/changeValReducer'
+import validationSchemeSelectors from "./reducer/validationSchemeSelectorsReducer";
 
 const rootReducer = combineReducers({
-    valSheme
-})
+  validationSchemeSelectors,
+});
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer);
 
-export default store
+export default store;
