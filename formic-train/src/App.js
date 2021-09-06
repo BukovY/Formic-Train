@@ -4,6 +4,7 @@ import { SelectorValidationSheme } from "./components/SelectorValidationSheme/";
 import { changeValSheme } from "./utils/validationFunction";
 import { useDispatch, useSelector } from "react-redux";
 import { setValidation } from "./redux/actions/changeVal";
+import { onSubmitLoginForm } from "./utils/onSubmit";
 
 function App() {
   const { valSheme } = useSelector((state) => state.valSheme);
@@ -14,7 +15,11 @@ function App() {
   return (
     <>
       <SelectorValidationSheme setValidationSheme={setValidationSheme} />
-      <LoginForm valSheme={valSheme} loginValidation={changeValSheme} />
+      <LoginForm
+        valSheme={valSheme}
+        loginValidation={changeValSheme}
+        onSubmit={onSubmitLoginForm}
+      />
     </>
   );
 }

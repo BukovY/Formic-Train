@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const LoginForm = ({ valSheme, loginValidation }) => {
+export const LoginForm = ({ valSheme, loginValidation, onSubmit }) => {
   const memorizedValSheme = useMemo(() => {
     return valSheme;
   }, [valSheme]);
@@ -18,7 +18,7 @@ export const LoginForm = ({ valSheme, loginValidation }) => {
         password: Yup.string().max(5, "Need < 5").required(),
       }),
       onSubmit: ({ login, password }) => {
-        alert(`login ${login} password ${password}`);
+        onSubmit({ login: login, password: password });
       },
     });
   return (
