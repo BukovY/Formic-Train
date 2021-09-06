@@ -22,7 +22,7 @@ function App() {
       <LoginForm
         loginValidationMethod={loginValidationMethod}
         getSchemeValidation={getValidationScheme}
-        submit={fakeSubmitFunction}
+        onSubmit={fakeSubmitFunction}
       />
     </>
   );

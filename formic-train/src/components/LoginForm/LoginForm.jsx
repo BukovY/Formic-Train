@@ -5,9 +5,9 @@ import * as Yup from "yup";
 export const LoginForm = ({
   loginValidationMethod,
   getSchemeValidation,
-  submit,
+  onSubmit,
 }) => {
-  const ValidationScheme = useMemo(() => {
+  const validationSchema = useMemo(() => {
     return Yup.object({
       login: getSchemeValidation(loginValidationMethod),
       password: Yup.string().max(5, "Need < 5").required(),
@@ -21,11 +21,9 @@ export const LoginForm = ({
 
   const { handleSubmit, handleChange, touched, values, errors, handleBlur } =
     useFormik({
-      initialValues: initialValues,
-      validationSchema: ValidationScheme,
-      onSubmit: (values) => {
-        submit(values);
-      },
+      initialValues,
+      validationSchema,
+      onSubmit,
     });
 
   const keys = Object.keys(initialValues);
