@@ -2,6 +2,11 @@ import React, { useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+const initialValues = {
+  login: "",
+  password: "",
+};
+
 export const LoginForm = ({
   loginValidationMethod,
   getSchemeValidation,
@@ -14,11 +19,6 @@ export const LoginForm = ({
     });
   }, [loginValidationMethod, getSchemeValidation]);
 
-  const initialValues = {
-    login: "",
-    password: "",
-  };
-
   const { handleSubmit, handleChange, touched, values, errors, handleBlur } =
     useFormik({
       initialValues,
@@ -26,12 +26,11 @@ export const LoginForm = ({
       onSubmit,
     });
 
-  const keys = Object.keys(initialValues);
   return (
     <>
       <form onSubmit={handleSubmit}>
         <header>login form test</header>
-        {keys.map((el) => (
+        {Object.keys(initialValues).map((el) => (
           <div key={el}>
             <label htmlFor={String(el)}>{String(el)}</label>
             <input
