@@ -13,12 +13,16 @@ function App() {
   const setValidationScheme = (arg) => {
     dispatch(setValidationLogin(arg));
   };
+  const fakeSubmitFunction = (arg) => {
+    console.log(arg);
+  };
   return (
     <>
       <SelectorValidationScheme setValidationScheme={setValidationScheme} />
       <LoginForm
         loginValidationMethod={loginValidationMethod}
         getSchemeValidation={getValidationScheme}
+        submit={fakeSubmitFunction}
       />
     </>
   );

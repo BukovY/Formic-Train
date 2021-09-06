@@ -2,13 +2,17 @@ import React, { useMemo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const LoginForm = ({ loginValidationMethod, getSchemeValidation }) => {
+export const LoginForm = ({
+  loginValidationMethod,
+  getSchemeValidation,
+  submit,
+}) => {
   const ValidationScheme = useMemo(() => {
     return Yup.object({
       login: getSchemeValidation(loginValidationMethod),
       password: Yup.string().max(5, "Need < 5").required(),
     });
-  }, [loginValidationMethod]);
+  }, [loginValidationMethod, getSchemeValidation]);
 
   const initialValues = {
     login: "",
@@ -19,8 +23,8 @@ export const LoginForm = ({ loginValidationMethod, getSchemeValidation }) => {
     useFormik({
       initialValues: initialValues,
       validationSchema: ValidationScheme,
-      onSubmit: () => {
-        alert("форма валидна");
+      onSubmit: (values) => {
+        submit(values);
       },
     });
 
@@ -29,20 +33,20 @@ export const LoginForm = ({ loginValidationMethod, getSchemeValidation }) => {
     <>
       <form onSubmit={handleSubmit}>
         <header>login form test</header>
-        {keys.map((key) => (
-          <>
-            <label htmlFor={String(key)}>{String(key)}</label>
+        {keys.map((el) => (
+          <div key={el}>
+            <label htmlFor={String(el)}>{String(el)}</label>
             <input
-              label={String(key)}
+              label={String(el)}
               onChange={handleChange}
-              value={values[key]}
+              value={values[el]}
               onBlur={handleBlur}
-              id={String(key)}
-              name={String(key)}
+              id={String(el)}
+              name={String(el)}
               type="text"
             />
-            {touched[key] && errors[key] ? <div>{errors[key]}</div> : null}
-          </>
+            {touched[el] && errors[el] ? <div>{errors[el]}</div> : null}
+          </div>
         ))}
         <button type="submit" color="primary" variant="contained">
           Log in
